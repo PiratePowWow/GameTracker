@@ -12,6 +12,7 @@ public class Main {
     static HashMap<String, User> users = new HashMap<>();
 
     public static void main(String[] args) {
+        Spark.externalStaticFileLocation("public");
 
         Spark.init();
 
@@ -35,6 +36,9 @@ public class Main {
                 ((request, response) -> {
                     String name = request.queryParams("loginName");
                     User user = users.get(name);
+                    if(name==null){
+                        throw new Exception("Login Name Cannot Be Null");
+                    }
                     if (user==null){
                         user = new User(name);
                         users.put(name, user);
@@ -62,6 +66,9 @@ public class Main {
                     String gameGenre = request.queryParams("gameGenre");
                     String gamePlatform = request.queryParams("gamePlatform");
                     int releaseYear = Integer.valueOf(request.queryParams("releaseYear"));
+                    if (gameName==null||gameGenre==null||gamePlatform==null){
+                        throw new  Exception("Did not receive all queried parameters.");
+                    }
                     Game game = new Game(gameName, gameGenre, gamePlatform, releaseYear);
                     user.games.add(game);
 
