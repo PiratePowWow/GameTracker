@@ -24,11 +24,42 @@
         <option value="xbone">Xbox One</option>
     </select>
     <input type="number" placeholder="Release Year" name="releaseYear">
-    <button type="submit">Submit</button>
+    <button type="submit">Create Game</button>
 </form>
 <ol>
     {{#games}}
-    <li>{{name}} - {{genre}} - {{platform}} - {{releaseYear}}</li>
+    <li>{{name}} - {{genre}} - {{platform}} - {{releaseYear}}
+        <form action="/delete-game" method="post">
+            <input hidden name="id" value="{{id}}">
+            <button type="submit">DELETE</button>
+        </form>
+        <form action="/?editGame" method="get">
+            <input hidden name="editGame" value="{{id}}">
+            <button type="submit">Edit Game</button>
+        </form>
+        {{#editGame}}
+        <form action="/edit-game" method="post">
+            <input hidden name="id" value="{{id}}">
+            <input type="text" placeholder="Game Name" name="gameName" width="100"/>
+            <select name="gameGenre">
+                <option selected disabled>Pick a Genre</option>
+                <option value="adventure">Adventure</option>
+                <option value="rpg">RPG</option>
+                <option value="strategy">Strategy</option>
+                <option value="shooter">Shooter</option>
+            </select>
+            <select name="gamePlatform">
+                <option selected disabled>Pick a Game Platform</option>
+                <option value="pc">PC</option>
+                <option value="mac">MAC</option>
+                <option value="ps4">PS4</option>
+                <option value="xbone">Xbox One</option>
+            </select>
+            <input type="number" placeholder="Release Year" name="releaseYear">
+            <button type="submit">Edit Game</button>
+        </form>
+        {{/editGame}}
+    </li>
     {{/games}}
 </ol>
 </body>
